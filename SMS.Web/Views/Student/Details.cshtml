@@ -26,13 +26,14 @@
             <a asp-controller="Student" asp-action="Index" class="btn btn-sm btn-primary">Students</a>
 
             <!-- TBC - add navigation link to CreateTicket action, passing correct route parameter --> 
-            
+             <a asp-controller="Student" asp-action="TicketCreate" asp-route-id="@Model.Id" 
+             class="btn btn-sm btn-secondary">Create Ticket</a>
 
             <!-- add navigation link to Details action, passing the correct route id parameter --> 
-            <a asp-controller="Student" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary">Edit</a>
+            <a asp-controller="Student" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">Edit</a>
             
             <!-- add navigation link to Delete action, passing the correct route id parameter --> 
-            <a asp-controller="Student" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">Delete</a>
+            <a asp-controller="Student" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">Delete</a>  
         </div>
     </div>
     <!-- Photo -->
@@ -41,5 +42,13 @@
     </div>
 </div>
 
-<!-- TBC Create and Add Tickets Partial View Table -->   
+<!-- TBC Create and Add Tickets Partial View Table -->  
 
+@if (Model.Tickets.Count > 0)
+{
+    <partial name="_Tickets"></partial>
+}
+else
+{
+    <h5 class="btn btn-info mt-4 mb-4">No Ticket at this moment...</h5>
+}

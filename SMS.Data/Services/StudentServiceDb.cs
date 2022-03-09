@@ -112,7 +112,17 @@ namespace SMS.Data.Services
         public Ticket CreateTicket(int studentId, string issue)
         {
             // TBC - complete this method
-            return null;
+            var s = GetStudent(studentId);
+            if(s==null){
+                return null;
+            }
+           
+            //create a ticket
+
+            var t = new Ticket { StudentId = studentId, Issue = issue };
+            db.Tickets.Add(t);
+            db.SaveChanges();
+            return t;
         }
 
         public Ticket GetTicket(int id)

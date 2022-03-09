@@ -211,15 +211,18 @@ namespace SMS.Test
         // ---------------------- Ticket Tests ------------------------
         
         [Fact] 
-        public void Ticket_CreateTicket_ForExistingStudent_ShouldBeCreated()
+        public async void Ticket_CreateTicket_ForExistingStudent_ShouldBeCreated()
         {
             // TBC - complete this method
             // arrange
-           
+            var s = svc.AddStudent("Clare", "Computing", "clare@gmail.com", 21, 0, "");
             // act
-           
+            var t = svc.CreateTicket(s.Id, "An issue");
             // assert
-          
+            Assert.NotNull(t);
+            Assert.Equal(s.Id, t.StudentId);
+            Assert.Equal("An issue", t.Issue);
+
         }
 
          [Fact] // --- GetTicket should include Student

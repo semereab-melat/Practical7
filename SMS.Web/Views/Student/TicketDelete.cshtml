@@ -25,8 +25,20 @@
     <div class="mt-4">
         <!-- TBC -->
         <!-- add a form with hidden input storing the ticket id as Id and a   -->
+
         <!-- second hidden input field containing the student id as StudentId -->
         <!-- the form asp-action should call TicketDeleteConfirm              -->
+
+<form asp-action="TicketDeleteConfirm" type="post">
+            <input type="hidden" asp-for="StudentId" class="form-control"/>
+            <input type="hidden" asp-for="@Model.Id" class="form-control"/>
+              <input type="submit" value="Delete" class="btn btn-danger" />
+            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@Model.StudentId">Back</a>
+        </form>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
     </div>
     
-</div>

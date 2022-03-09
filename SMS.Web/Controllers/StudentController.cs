@@ -20,7 +20,7 @@ namespace SMS.Web.Controllers
         {
             // complete this method
             var students = svc.GetStudents();
-            
+
             return View(students);
         }
 
@@ -52,7 +52,7 @@ namespace SMS.Web.Controllers
         public IActionResult Create(Student s)
         {
             // TBC - complete POST action to add student (remove NotFound)
-            
+
             return NotFound();
         }
 
@@ -66,7 +66,7 @@ namespace SMS.Web.Controllers
             if (s == null)
             {
                 return NotFound();
-            }   
+            }
 
             // pass student to view for editing
             return View(s);
@@ -81,10 +81,10 @@ namespace SMS.Web.Controllers
             {
                 // pass data to service to update
                 svc.UpdateStudent(s);
-                
+
                 // UX: display feedback and redirect to view the student details
                 Alert("Student updated successfully", AlertType.info);
-                return RedirectToAction(nameof(Details), new { Id = s.Id});
+                return RedirectToAction(nameof(Details), new { Id = s.Id });
             }
 
             // redisplay the form for editing as validation errors
@@ -100,8 +100,8 @@ namespace SMS.Web.Controllers
             if (s == null)
             {
                 return NotFound();
-            }     
-            
+            }
+
             // pass student to view for deletion confirmation
             return View(s);
         }
@@ -112,7 +112,7 @@ namespace SMS.Web.Controllers
         {
             // TBC delete student via service
             svc.DeleteStudent(id);
-            
+
             // redirect to the index view
             return RedirectToAction(nameof(Index));
         }
@@ -120,7 +120,7 @@ namespace SMS.Web.Controllers
 
         // ============== Student ticket management ==============
 
-          // GET /student/createticket/{id}
+        // GET /student/createticket/{id}
         public IActionResult TicketCreate(int id)
         {
             var s = svc.GetStudent(id);
@@ -130,9 +130,9 @@ namespace SMS.Web.Controllers
             }
 
             // create a ticket view model and set foreign key
-            var ticket = new Ticket { StudentId = id }; 
+            var ticket = new Ticket { StudentId = id };
             // render blank form
-            return View( ticket );
+            return View(ticket);
         }
 
         // POST /student/create
@@ -140,15 +140,15 @@ namespace SMS.Web.Controllers
         public IActionResult TicketCreate(Ticket t)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 var ticket = svc.CreateTicket(t.StudentId, t.Issue);
-                return RedirectToAction(nameof(Details), new { Id = ticket.StudentId });
+                return RedirectToAction(nameof(Details), new { Id = t.StudentId });
             }
             // redisplay the form for editing
             return View(t);
         }
 
-         // GET /student/ticketdelete/{id}
+        // GET /student/ticketdelete/{id}
         public IActionResult TicketDelete(int id)
         {
             // load the ticket using the service
@@ -157,8 +157,8 @@ namespace SMS.Web.Controllers
             if (ticket == null)
             {
                 return NotFound();
-            }     
-            
+            }
+
             // pass ticket to view for deletion confirmation
             return View(ticket);
         }
@@ -168,9 +168,17 @@ namespace SMS.Web.Controllers
         public IActionResult TicketDeleteConfirm(int id, int studentId)
         {
             // TBC delete student via service
-            
+            var deleted = svc.GetStudent(studentId);
+
+            if (deleted == null)
+            {
+                return NotFound();
+            }
+
             // redirect to view the List of Students
-            return NotFound();
+            svc.DeleteTicket(id);
+            return RedirectToAction(nameof(Details), new { Id = studentId });
+
         }
 
 
